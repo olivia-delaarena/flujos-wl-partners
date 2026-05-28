@@ -1,0 +1,361 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:12px;font-weight:500;cursor:pointer;background:var(--color-background-secondary);color:var(--color-text-secondary);transition:all .18s}
+.tab:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+.tab.on{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-primary);box-shadow:0 0 0 1px var(--color-border-primary)}
+.tab .ticon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.panel{display:none}
+.panel.on{display:block}
+.type-header{border-radius:10px;padding:12px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px}
+.type-header .th-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:1px}
+.type-header .th-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.type-header .th-sub{font-size:12px;line-height:1.5}
+.flow-wrap{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding:4px 0 14px;margin-bottom:16px}
+.step{display:flex;flex-direction:column;align-items:center;min-width:82px;flex:1}
+.step-icon-wrap{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid transparent;position:relative;flex-shrink:0}
+.badge-req{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:#E24B4A;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:700;border:1.5px solid var(--color-background-primary)}
+.badge-opt{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:#EF9F27;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:700;border:1.5px solid var(--color-background-primary)}
+.badge-rec{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:#185FA5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;border:1.5px solid var(--color-background-primary)}
+.step-label{font-size:11px;font-weight:600;margin-top:6px;text-align:center}
+.step-sub{font-size:10px;text-align:center;line-height:1.3;margin-top:2px;max-width:84px}
+.connector{flex:1;min-width:8px;height:2px;margin-top:25px;border-radius:1px}
+.login-banner{display:flex;align-items:flex-start;gap:9px;margin-bottom:14px;padding:10px 13px;border-radius:8px;border:0.5px solid}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin-bottom:8px}
+.info-card{border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 13px;background:var(--color-background-secondary)}
+.ic-label{font-size:10px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.ic-val{font-size:12px;font-weight:500;color:var(--color-text-primary);line-height:1.4}
+.ic-mono{font-family:monospace;font-size:10px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6;word-break:break-all}
+.url-card{border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 13px;margin-bottom:8px;background:var(--color-background-secondary)}
+.url-link{display:flex;align-items:center;gap:6px;font-size:11px;font-family:monospace;text-decoration:none;padding:5px 8px;border-radius:5px;border:0.5px solid;margin-top:5px;transition:opacity .15s;word-break:break-all;line-height:1.4}
+.url-link:hover{opacity:.72;text-decoration:underline}
+.flag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.flag{font-family:monospace;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:500}
+.callout{border-radius:8px;padding:11px 15px;border:0.5px solid;margin-top:8px}
+.callout-title{font-size:12px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.callout-body{font-size:12px;line-height:1.6}
+.compare-wrap{overflow-x:auto;margin-top:4px}
+.compare-table{width:100%;border-collapse:collapse;font-size:11px;min-width:480px}
+.compare-table th{padding:8px 10px;font-weight:600;font-size:10px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-secondary);text-align:left;white-space:nowrap}
+.compare-table td{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle}
+.compare-table tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.login-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding:10px 13px;border-radius:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-text-secondary)}
+.legend-dot{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:700;flex-shrink:0}
+
+.compare-full{overflow-x:auto;padding-bottom:4px}
+.compare-full table{width:100%;border-collapse:collapse;min-width:580px;font-size:12px}
+.compare-full thead th{padding:10px 12px;font-size:11px;font-weight:600;text-align:center;border:0.5px solid rgba(0,0,0,.12)}
+.compare-full thead th:first-child{text-align:left;background:var(--color-background-secondary);color:var(--color-text-secondary);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.compare-full tbody td{padding:9px 12px;border:0.5px solid var(--color-border-tertiary);vertical-align:middle;line-height:1.4}
+.compare-full tbody td:first-child{font-size:11px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-secondary);white-space:nowrap}
+.check{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:12px}
+.check.yes{background:#EAF3DE;color:#3B6D11}
+.check.no{background:#F1EFE8;color:#888780}
+.check.excl{background:#EEEDFE;color:#534AB7;font-size:9px;font-weight:700}
+.centered{text-align:center}
+.login-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap}
+.nav-tabs{display:flex;gap:0;margin-bottom:0;border-bottom:0.5px solid var(--color-border-secondary)}
+.nav-tab{padding:8px 16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none}
+.nav-tab:hover{color:var(--color-text-primary)}
+.nav-tab.on{color:var(--color-text-primary);border-bottom-color:var(--color-text-primary)}
+.nav-panel{display:none;padding-top:16px}
+.nav-panel.on{display:block}
+</style>
+
+<h2 class="sr-only">Flujos WL y tabla comparativa – versión corregida con Scotia en Beneficio Abierto</h2>
+
+<div class="login-legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#EF9F27">?</div>Login opcional</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#185FA5">★</div>Login recomendado — para acumular</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#E24B4A">!</div>Login obligatorio — sin token no hay acceso</div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab on" onclick="nav('flujos',this)">Flujos por tipo</button>
+  <button class="nav-tab" onclick="nav('tabla',this)">Tabla comparativa</button>
+</div>
+
+<!-- ══ FLUJOS ══ -->
+<div class="nav-panel on" id="nav-flujos">
+
+  <div class="tabs" style="margin-top:16px">
+    <button class="tab on" onclick="show('ba',this)"><span class="ticon" style="background:#E1F5EE;color:#0F6E56"><i class="ti ti-world"></i></span>Beneficio abierto</button>
+    <button class="tab" onclick="show('ac',this)"><span class="ticon" style="background:#E6F1FB;color:#185FA5"><i class="ti ti-award"></i></span>Acumulación</button>
+    <button class="tab" onclick="show('pc',this)"><span class="ticon" style="background:#EEEDFE;color:#534AB7"><i class="ti ti-coin"></i></span>Puntos / canje</button>
+    <button class="tab" onclick="show('bb',this)"><span class="ticon" style="background:#FCEBEB;color:#A32D2D"><i class="ti ti-building-bank"></i></span>BBVA especial</button>
+  </div>
+
+  <!-- BENEFICIO ABIERTO -->
+  <div class="panel on" id="p-ba">
+    <div class="type-header" style="background:#E1F5EE;border:0.5px solid #5DCAA5">
+      <div class="th-icon" style="background:#5DCAA5"><i class="ti ti-world" style="color:#fff"></i></div>
+      <div><div class="th-title" style="color:#085041">Tipo 1 — Beneficio abierto</div>
+      <div class="th-sub" style="color:#0F6E56">El usuario accede a descuentos y promociones especiales del partner. Login opcional según configuración.</div></div>
+    </div>
+    <div class="flow-wrap">
+      <div class="step"><div class="step-icon-wrap" style="background:#E1F5EE;border-color:#5DCAA5"><i class="ti ti-home" style="color:#0F6E56;font-size:20px"></i></div><div class="step-label" style="color:#085041">Home</div><div class="step-sub" style="color:#0F6E56">Landing page del partner</div></div>
+      <div class="connector" style="background:#5DCAA5"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FFF8F0;border-color:#D3D1C7;position:relative"><i class="ti ti-lock-open" style="color:#888780;font-size:20px"></i><span class="badge-opt">?</span></div><div class="step-label" style="color:#5F5E5A">Login</div><div class="step-sub" style="color:#888780">Opcional según partner</div></div>
+      <div class="connector" style="background:#5DCAA5"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#AFA9EC"><i class="ti ti-search" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Search</div><div class="step-sub" style="color:#534AB7">Busca productos, ve descuentos</div></div>
+      <div class="connector" style="background:#85B7EB"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#E6F1FB;border-color:#85B7EB"><i class="ti ti-file-description" style="color:#185FA5;font-size:20px"></i></div><div class="step-label" style="color:#0C447C">Detail</div><div class="step-sub" style="color:#185FA5">Ve descuento aplicado</div></div>
+      <div class="connector" style="background:#EF9F27"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FAEEDA;border-color:#EF9F27"><i class="ti ti-credit-card" style="color:#854F0B;font-size:20px"></i></div><div class="step-label" style="color:#633806">Checkout</div><div class="step-sub" style="color:#854F0B">Paga con descuento ✓</div></div>
+      <div class="connector" style="background:#97C459"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EAF3DE;border-color:#97C459"><i class="ti ti-circle-check" style="color:#3B6D11;font-size:20px"></i></div><div class="step-label" style="color:#27500A">Confirmation</div><div class="step-sub" style="color:#3B6D11">Voucher al email</div></div>
+    </div>
+    <div class="login-banner" style="background:#FFF8F0;border-color:#D3D1C7">
+      <i class="ti ti-lock-open" style="color:#888780;font-size:15px;margin-top:1px"></i>
+      <div><div style="font-size:12px;font-weight:500;color:#5F5E5A">Login <strong>opcional</strong> — depende de la configuración de cada partner</div>
+      <div style="font-size:11px;color:#888780;margin-top:2px">El site carga con tarifas públicas independientemente. El usuario puede comprar sin identificarse.</div></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-label"><i class="ti ti-link" style="font-size:11px"></i>Tipo de acceso</div><div class="ic-val">Directo (type = ON)</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-credit-card" style="font-size:11px"></i>Método de pago</div><div class="ic-val">Dinero con descuento</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-coin-off" style="font-size:11px"></i>Puntos</div><div class="ic-val">No aplica</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-users" style="font-size:11px"></i>Partners Tier 1</div><div class="ic-val">Livelo, Liverpool, Naranja, BCI, Scotia</div></div>
+    </div>
+    <div class="url-card">
+      <div class="ic-label"><i class="ti ti-external-link" style="font-size:11px"></i>URLs — clickeá para abrir</div>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://viajes.naranjax.com" target="_blank"><i class="ti ti-external-link"></i>viajes.naranjax.com — Naranja X</a>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://viajes.tiendabna.com.ar" target="_blank"><i class="ti ti-external-link"></i>viajes.tiendabna.com.ar — BNA</a>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://viajestr.liverpool.com.mx" target="_blank"><i class="ti ti-external-link"></i>viajestr.liverpool.com.mx — Liverpool</a>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://bci.viajes.despegar.cl" target="_blank"><i class="ti ti-external-link"></i>bci.viajes.despegar.cl — BCI</a>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=scotiabankcl&points=10000000" target="_blank"><i class="ti ti-external-link"></i>sessions/init?partner_id=scotiabankcl — Scotia CL</a>
+      <a class="url-link" style="color:#085041;border-color:#5DCAA5;background:#E1F5EE" href="https://livelo.viagens.decolar.com" target="_blank"><i class="ti ti-external-link"></i>livelo.viagens.decolar.com — Livelo</a>
+    </div>
+    <div class="callout" style="background:#E1F5EE;border-color:#5DCAA5">
+      <div class="callout-title" style="color:#085041"><i class="ti ti-bulb" style="font-size:13px"></i>Diferencial clave</div>
+      <div class="callout-body" style="color:#0F6E56">Acceso libre por URL pública. El usuario ve descuentos y promociones especiales sin necesidad de identificarse. Login opcional según la config de cada partner.</div>
+    </div>
+  </div>
+
+  <!-- ACUMULACIÓN -->
+  <div class="panel" id="p-ac">
+    <div class="type-header" style="background:#E6F1FB;border:0.5px solid #85B7EB">
+      <div class="th-icon" style="background:#378ADD"><i class="ti ti-award" style="color:#fff"></i></div>
+      <div><div class="th-title" style="color:#0C447C">Tipo 2 — Acumulación</div>
+      <div class="th-sub" style="color:#185FA5">El usuario acumula puntos/millas del partner por cada compra. No usa puntos para pagar.</div></div>
+    </div>
+    <div class="flow-wrap">
+      <div class="step"><div class="step-icon-wrap" style="background:#E6F1FB;border-color:#85B7EB"><i class="ti ti-home" style="color:#185FA5;font-size:20px"></i></div><div class="step-label" style="color:#0C447C">Home</div><div class="step-sub" style="color:#185FA5">Portal branded del partner</div></div>
+      <div class="connector" style="background:#85B7EB"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#E6F1FB;border-color:#378ADD;position:relative"><i class="ti ti-lock-open" style="color:#185FA5;font-size:20px"></i><span class="badge-rec">★</span></div><div class="step-label" style="color:#185FA5">Login</div><div class="step-sub" style="color:#185FA5">Recomendado para acumular</div></div>
+      <div class="connector" style="background:#85B7EB"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#AFA9EC"><i class="ti ti-search" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Search</div><div class="step-sub" style="color:#534AB7">Busca, navega catálogo</div></div>
+      <div class="connector" style="background:#85B7EB"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#E6F1FB;border-color:#85B7EB"><i class="ti ti-file-description" style="color:#185FA5;font-size:20px"></i></div><div class="step-label" style="color:#0C447C">Detail</div><div class="step-sub" style="color:#185FA5">Ve puntos a ganar</div></div>
+      <div class="connector" style="background:#EF9F27"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FAEEDA;border-color:#EF9F27"><i class="ti ti-credit-card" style="color:#854F0B;font-size:20px"></i></div><div class="step-label" style="color:#633806">Checkout</div><div class="step-sub" style="color:#854F0B">Paga con dinero ✓ Acumula</div></div>
+      <div class="connector" style="background:#97C459"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EAF3DE;border-color:#97C459"><i class="ti ti-circle-check" style="color:#3B6D11;font-size:20px"></i></div><div class="step-label" style="color:#27500A">Confirmation</div><div class="step-sub" style="color:#3B6D11">Voucher + puntos post-viaje</div></div>
+    </div>
+    <div class="login-banner" style="background:#E6F1FB;border-color:#85B7EB">
+      <i class="ti ti-info-circle" style="color:#185FA5;font-size:15px;margin-top:1px"></i>
+      <div><div style="font-size:12px;font-weight:500;color:#0C447C">Login <strong>recomendado</strong> — no bloquea el acceso, pero es necesario para acumular</div>
+      <div style="font-size:11px;color:#185FA5;margin-top:2px">El site carga libre (type = ON). Sin login se puede comprar igual, pero los puntos no se acreditan.</div></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-label"><i class="ti ti-link" style="font-size:11px"></i>Tipo de acceso</div><div class="ic-val">Directo (type = ON)</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-credit-card" style="font-size:11px"></i>Método de pago</div><div class="ic-val">Dinero tradicional</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-award" style="font-size:11px"></i>Uso de puntos</div><div class="ic-val">Sí — Acumulación</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-code" style="font-size:11px"></i>Flag clave</div><div class="ic-mono">WL_ACCUMULATION_FLOW = 1</div></div>
+      <div class="info-card" style="grid-column:1/-1"><div class="ic-label"><i class="ti ti-users" style="font-size:11px"></i>Partners Tier 1</div><div class="ic-val">Latam Airlines (BR, CL, PE, CO, AR), Esfera, Livelo-BB</div></div>
+    </div>
+    <div class="url-card">
+      <div class="ic-label"><i class="ti ti-external-link" style="font-size:11px"></i>URLs — clickeá para abrir</div>
+      <a class="url-link" style="color:#0C447C;border-color:#85B7EB;background:#E6F1FB" href="https://latamtravel-brasil.decolar.com" target="_blank"><i class="ti ti-external-link"></i>latamtravel-brasil.decolar.com — LATAM BR</a>
+      <a class="url-link" style="color:#0C447C;border-color:#85B7EB;background:#E6F1FB" href="https://latamtravel-chile.despegar.cl" target="_blank"><i class="ti ti-external-link"></i>latamtravel-chile.despegar.cl — LATAM CL</a>
+      <a class="url-link" style="color:#0C447C;border-color:#85B7EB;background:#E6F1FB" href="https://latamtravel-peru.despegar.com.pe" target="_blank"><i class="ti ti-external-link"></i>latamtravel-peru.despegar.com.pe — LATAM PE</a>
+      <a class="url-link" style="color:#0C447C;border-color:#85B7EB;background:#E6F1FB" href="https://latamtravel-colombia.despegar.com.co" target="_blank"><i class="ti ti-external-link"></i>latamtravel-colombia.despegar.com.co — LATAM CO</a>
+      <a class="url-link" style="color:#0C447C;border-color:#85B7EB;background:#E6F1FB" href="https://esfera.viagens.decolar.com" target="_blank"><i class="ti ti-external-link"></i>esfera.viagens.decolar.com — Esfera</a>
+    </div>
+    <div class="callout" style="background:#E6F1FB;border-color:#85B7EB">
+      <div class="callout-title" style="color:#0C447C"><i class="ti ti-bulb" style="font-size:13px"></i>Diferencial clave</div>
+      <div class="callout-body" style="color:#185FA5">Acceso libre igual que Beneficio Abierto (type = ON), pero con WL_ACCUMULATION_FLOW = 1. El usuario paga en dinero y acumula puntos si está logueado. Sin login compra igual pero no acumula.</div>
+    </div>
+  </div>
+
+  <!-- PUNTOS / CANJE -->
+  <div class="panel" id="p-pc">
+    <div class="type-header" style="background:#EEEDFE;border:0.5px solid #AFA9EC">
+      <div class="th-icon" style="background:#7F77DD"><i class="ti ti-coin" style="color:#fff"></i></div>
+      <div><div class="th-title" style="color:#26215C">Tipo 3 — Puntos (canje)</div>
+      <div class="th-sub" style="color:#3C3489">El usuario canjea puntos/millas del programa de lealtad para pagar total o parcialmente.</div></div>
+    </div>
+    <div class="flow-wrap">
+      <div class="step"><div class="step-icon-wrap" style="background:#F1EFE8;border-color:#B4B2A9"><i class="ti ti-building-bank" style="color:#444441;font-size:20px"></i></div><div class="step-label" style="color:#2C2C2A">Home</div><div class="step-sub" style="color:#5F5E5A">Portal loyalty del partner</div></div>
+      <div class="connector" style="background:#B4B2A9"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FCEBEB;border-color:#F09595;position:relative"><i class="ti ti-lock" style="color:#A32D2D;font-size:20px"></i><span class="badge-req">!</span></div><div class="step-label" style="color:#791F1F">Login</div><div class="step-sub" style="color:#A32D2D">✓ Obligatorio — verifica saldo</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#7F77DD"><i class="ti ti-key" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#26215C">Session init</div><div class="step-sub" style="color:#534AB7">Token con puntos a Despegar</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#AFA9EC"><i class="ti ti-search" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Search</div><div class="step-sub" style="color:#534AB7">Ve saldo disponible</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#7F77DD"><i class="ti ti-file-description" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Detail</div><div class="step-sub" style="color:#534AB7">Calcula puntos + $</div></div>
+      <div class="connector" style="background:#EF9F27"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FAEEDA;border-color:#EF9F27"><i class="ti ti-coin" style="color:#854F0B;font-size:20px"></i></div><div class="step-label" style="color:#633806">Checkout</div><div class="step-sub" style="color:#854F0B">Paga puntos + $ ✓</div></div>
+      <div class="connector" style="background:#97C459"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EAF3DE;border-color:#97C459"><i class="ti ti-circle-check" style="color:#3B6D11;font-size:20px"></i></div><div class="step-label" style="color:#27500A">Confirmation</div><div class="step-sub" style="color:#3B6D11">Puntos debitados</div></div>
+    </div>
+    <div class="login-banner" style="background:#FCEBEB;border-color:#F09595">
+      <i class="ti ti-lock" style="color:#A32D2D;font-size:15px;margin-top:1px"></i>
+      <div><div style="font-size:12px;font-weight:600;color:#791F1F">Login <strong>obligatorio</strong> — sin autenticación en el portal loyalty no hay acceso al WL</div>
+      <div style="font-size:11px;color:#A32D2D;margin-top:2px">Acceso type = OFF. El portal genera un token con el saldo de puntos y redirige al WL. Sin ese token la URL no funciona.</div></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-label"><i class="ti ti-link" style="font-size:11px"></i>Tipo de acceso</div><div class="ic-val">Indirecto (type = OFF)</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-coin" style="font-size:11px"></i>Método de pago</div><div class="ic-val">Puntos/Millas + dinero</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-coin" style="font-size:11px"></i>Uso de puntos</div><div class="ic-val">Sí — Canje</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-code" style="font-size:11px"></i>Type / Feature</div><div class="ic-mono">Type: LOYALTY<br>CANJE = 1 · REWARDS_FLOW = 1</div></div>
+      <div class="info-card" style="grid-column:1/-1"><div class="ic-label"><i class="ti ti-users" style="font-size:11px"></i>Ejemplos</div><div class="ic-val">Latam Airlines (latam-br-canje), ICBC (icbc-club-despegar), Sicredi, Coopera</div></div>
+    </div>
+    <div class="url-card">
+      <div class="ic-label"><i class="ti ti-external-link" style="font-size:11px"></i>URLs — clickeá para abrir</div>
+      <a class="url-link" style="color:#26215C;border-color:#AFA9EC;background:#EEEDFE" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=latam-br-canje&points=10000000" target="_blank"><i class="ti ti-external-link"></i>sessions/init?partner_id=latam-br-canje</a>
+      <a class="url-link" style="color:#26215C;border-color:#AFA9EC;background:#EEEDFE" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=latam-cl-canje&points=10000000" target="_blank"><i class="ti ti-external-link"></i>sessions/init?partner_id=latam-cl-canje</a>
+      <a class="url-link" style="color:#26215C;border-color:#AFA9EC;background:#EEEDFE" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=icbc-club-despegar&points=10000000" target="_blank"><i class="ti ti-external-link"></i>sessions/init?partner_id=icbc-club-despegar</a>
+      <a class="url-link" style="color:#26215C;border-color:#AFA9EC;background:#EEEDFE" href="http://backoffice.despegar.com/sc-services/sessions/init?partner_id=Sicredi" target="_blank"><i class="ti ti-external-link"></i>sessions/init?partner_id=Sicredi</a>
+    </div>
+    <div class="callout" style="background:#EEEDFE;border-color:#AFA9EC">
+      <div class="callout-title" style="color:#26215C"><i class="ti ti-bulb" style="font-size:13px"></i>Diferencial clave</div>
+      <div class="callout-body" style="color:#3C3489">El punto de entrada es siempre el portal loyalty. Genera una sesión autenticada con el saldo verificado y redirige al WL. Sin ese token no existe acceso posible.</div>
+    </div>
+  </div>
+
+  <!-- BBVA ESPECIAL -->
+  <div class="panel" id="p-bb">
+    <div class="type-header" style="background:#FCEBEB;border:0.5px solid #F09595">
+      <div class="th-icon" style="background:#E24B4A"><i class="ti ti-building-bank" style="color:#fff"></i></div>
+      <div><div class="th-title" style="color:#501313">Tipo 4 — BBVA (especial)</div>
+      <div class="th-sub" style="color:#A32D2D">Flujo especial BBVA con validación bancaria integrada. Incluye pasos adicionales vs flujo genérico de canje.</div></div>
+    </div>
+    <div class="flow-wrap">
+      <div class="step"><div class="step-icon-wrap" style="background:#FCEBEB;border-color:#F09595"><i class="ti ti-building-bank" style="color:#A32D2D;font-size:20px"></i></div><div class="step-label" style="color:#791F1F">Home</div><div class="step-sub" style="color:#A32D2D">Portal BBVA</div></div>
+      <div class="connector" style="background:#F09595"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FCEBEB;border-color:#E24B4A;position:relative"><i class="ti ti-lock" style="color:#A32D2D;font-size:20px"></i><span class="badge-req">!</span></div><div class="step-label" style="color:#791F1F">Login</div><div class="step-sub" style="color:#A32D2D">✓ Oblig. + validación bancaria</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#7F77DD"><i class="ti ti-key" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#26215C">Session init</div><div class="step-sub" style="color:#534AB7">Token BBVA + pts + tarjeta</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#AFA9EC"><i class="ti ti-search" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Search</div><div class="step-sub" style="color:#534AB7">Filtros especiales BBVA</div></div>
+      <div class="connector" style="background:#7F77DD"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EEEDFE;border-color:#7F77DD"><i class="ti ti-file-description" style="color:#534AB7;font-size:20px"></i></div><div class="step-label" style="color:#3C3489">Detail</div><div class="step-sub" style="color:#534AB7">Conversión puntos BBVA</div></div>
+      <div class="connector" style="background:#EF9F27"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#FAEEDA;border-color:#EF9F27"><i class="ti ti-cards" style="color:#854F0B;font-size:20px"></i></div><div class="step-label" style="color:#633806">Checkout</div><div class="step-sub" style="color:#854F0B">Puntos + tarjeta + impuestos</div></div>
+      <div class="connector" style="background:#97C459"></div>
+      <div class="step"><div class="step-icon-wrap" style="background:#EAF3DE;border-color:#97C459"><i class="ti ti-circle-check" style="color:#3B6D11;font-size:20px"></i></div><div class="step-label" style="color:#27500A">Confirmation</div><div class="step-sub" style="color:#3B6D11">Email + notif. bancaria</div></div>
+    </div>
+    <div class="login-banner" style="background:#FCEBEB;border-color:#E24B4A">
+      <i class="ti ti-lock" style="color:#A32D2D;font-size:15px;margin-top:1px"></i>
+      <div><div style="font-size:12px;font-weight:600;color:#791F1F">Login <strong>obligatorio</strong> con validación bancaria integrada — exclusivo BBVA</div>
+      <div style="font-size:11px;color:#A32D2D;margin-top:2px">A diferencia del canje genérico, el login incluye una validación adicional del banco antes de generar el token.</div></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-label"><i class="ti ti-link" style="font-size:11px"></i>Tipo de acceso</div><div class="ic-val">Indirecto — backoffice especial</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-cards" style="font-size:11px"></i>Método de pago</div><div class="ic-val">Puntos BBVA + $ (opcional)</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-receipt-tax" style="font-size:11px"></i>Impuestos con puntos</div><div class="ic-val" style="color:#3C3489;font-weight:600">Sí — exclusivo BBVA</div></div>
+      <div class="info-card"><div class="ic-label"><i class="ti ti-map-pin" style="font-size:11px"></i>Países</div><div class="ic-val">AR, CO, UY, PE</div></div>
+    </div>
+    <div class="info-card" style="margin-bottom:8px">
+      <div class="ic-label"><i class="ti ti-code" style="font-size:11px"></i>Flags exclusivos BBVA</div>
+      <div class="flag-row">
+        <span class="flag" style="background:#EEEDFE;color:#3C3489">FLOW_REWARDS_FULLPOINTS</span>
+        <span class="flag" style="background:#EEEDFE;color:#3C3489">LOYALTY_PAY_PARTIAL_TAXES</span>
+        <span class="flag" style="background:#EEEDFE;color:#3C3489">REWARDS_DISCOUNT_OVER_TOTAL</span>
+        <span class="flag" style="background:#EEEDFE;color:#3C3489">CARD_REMPLACEMENT</span>
+        <span class="flag" style="background:#EEEDFE;color:#3C3489">REWARDS_FLOW_V2</span>
+      </div>
+    </div>
+    <div class="url-card">
+      <div class="ic-label"><i class="ti ti-external-link" style="font-size:11px"></i>URLs — clickeá para abrir</div>
+      <a class="url-link" style="color:#791F1F;border-color:#F09595;background:#FCEBEB" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=bbva-ar&points=10000000" target="_blank"><i class="ti ti-external-link"></i>partner_id=bbva-ar — Argentina</a>
+      <a class="url-link" style="color:#791F1F;border-color:#F09595;background:#FCEBEB" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=bbva-co&points=10000000" target="_blank"><i class="ti ti-external-link"></i>partner_id=bbva-co — Colombia</a>
+      <a class="url-link" style="color:#791F1F;border-color:#F09595;background:#FCEBEB" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=bbva-uy&points=10000000" target="_blank"><i class="ti ti-external-link"></i>partner_id=bbva-uy — Uruguay</a>
+      <a class="url-link" style="color:#791F1F;border-color:#F09595;background:#FCEBEB" href="https://backoffice.despegar.com/sc-services/sessions/init?partner_id=bbva-pe-loyalty&points=10000000" target="_blank"><i class="ti ti-external-link"></i>partner_id=bbva-pe-loyalty — Perú</a>
+    </div>
+    <div class="callout" style="background:#FCEBEB;border-color:#F09595">
+      <div class="callout-title" style="color:#501313"><i class="ti ti-bulb" style="font-size:13px"></i>Diferencial clave vs canje genérico</div>
+      <div class="callout-body" style="color:#A32D2D">Backoffice dedicado con validación bancaria integrada. Checkout con pago mixto puntos + tarjeta, impuestos cubribles con puntos, y notificación bancaria post-compra.</div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-size:10px;font-weight:600;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:5px"><i class="ti ti-table" style="font-size:12px"></i>Canje genérico vs BBVA especial</div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead><tr><th>Dimensión</th><th>Canje genérico</th><th>BBVA especial</th></tr></thead>
+          <tbody>
+            <tr><td>Type</td><td><span class="pill" style="background:#EEEDFE;color:#3C3489">LOYALTY</span></td><td><span class="pill" style="background:#FCEBEB;color:#A32D2D">LOYALTY_BANK</span></td></tr>
+            <tr><td>Validación login</td><td style="font-size:11px">Portal loyalty estándar</td><td style="font-size:11px;font-weight:500">Validación bancaria integrada</td></tr>
+            <tr><td>Impuestos con puntos</td><td style="font-size:11px">No</td><td style="font-size:11px;font-weight:500;color:#3C3489">Sí</td></tr>
+            <tr><td>Pago mixto pts + $</td><td style="font-size:11px">No</td><td style="font-size:11px;font-weight:500;color:#3C3489">Sí</td></tr>
+            <tr><td>Descuento sobre</td><td style="font-size:11px">Base tarifaria</td><td style="font-size:11px;font-weight:500;color:#3C3489">Total (incl. impuestos)</td></tr>
+            <tr><td>Notif. post-compra</td><td style="font-size:11px">Email voucher</td><td style="font-size:11px;font-weight:500">Email + notif. bancaria</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TABLA COMPARATIVA ══ -->
+<div class="nav-panel" id="nav-tabla">
+  <div class="compare-full">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:130px"></th>
+          <th style="background:#1D9E75;color:#fff;min-width:130px"><i class="ti ti-world" style="font-size:14px;display:block;margin-bottom:3px"></i>Beneficio abierto</th>
+          <th style="background:#185FA5;color:#fff;min-width:130px"><i class="ti ti-award" style="font-size:14px;display:block;margin-bottom:3px"></i>Acumulación</th>
+          <th style="background:#534AB7;color:#fff;min-width:130px"><i class="ti ti-coin" style="font-size:14px;display:block;margin-bottom:3px"></i>Puntos / canje</th>
+          <th style="background:#A32D2D;color:#fff;min-width:130px"><i class="ti ti-building-bank" style="font-size:14px;display:block;margin-bottom:3px"></i>BBVA especial</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Tipo WL</td><td class="centered"><span class="pill" style="background:#E1F5EE;color:#085041">BENEFIT_OPEN</span></td><td class="centered"><span class="pill" style="background:#E6F1FB;color:#0C447C">BENEFIT_OPEN</span></td><td class="centered"><span class="pill" style="background:#EEEDFE;color:#26215C">LOYALTY</span></td><td class="centered"><span class="pill" style="background:#FCEBEB;color:#501313">LOYALTY_BANK</span></td></tr>
+        <tr><td>Acceso (type)</td><td class="centered"><span class="pill" style="background:#E1F5EE;color:#085041">ON — directo</span></td><td class="centered"><span class="pill" style="background:#E6F1FB;color:#0C447C">ON — directo</span></td><td class="centered"><span class="pill" style="background:#FAEEDA;color:#633806">OFF — backoffice</span></td><td class="centered"><span class="pill" style="background:#FCEBEB;color:#791F1F">OFF — backoffice BBVA</span></td></tr>
+        <tr>
+          <td>Login</td>
+          <td class="centered"><span class="login-badge" style="background:#F1EFE8;color:#5F5E5A;border:0.5px solid #D3D1C7"><i class="ti ti-lock-open" style="font-size:11px"></i>Opcional</span></td>
+          <td class="centered"><span class="login-badge" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB"><i class="ti ti-star" style="font-size:11px"></i>Recomendado</span></td>
+          <td class="centered"><span class="login-badge" style="background:#FCEBEB;color:#791F1F;border:0.5px solid #F09595"><i class="ti ti-lock" style="font-size:11px"></i>Obligatorio</span></td>
+          <td class="centered"><span class="login-badge" style="background:#FCEBEB;color:#791F1F;border:0.5px solid #E24B4A"><i class="ti ti-lock" style="font-size:11px"></i>Oblig. + bancario</span></td>
+        </tr>
+        <tr><td>Session init</td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check yes"><i class="ti ti-check" style="font-size:10px"></i></span></td><td class="centered"><span class="check yes"><i class="ti ti-check" style="font-size:10px"></i></span></td></tr>
+        <tr><td>Método de pago</td><td class="centered" style="font-size:11px;color:#085041">Dinero con descuento</td><td class="centered" style="font-size:11px;color:#0C447C">Dinero tradicional</td><td class="centered" style="font-size:11px;color:#26215C">Puntos + $ opcional</td><td class="centered" style="font-size:11px;color:#501313">Puntos BBVA + $ opcional</td></tr>
+        <tr><td>Uso de puntos</td><td class="centered"><span class="pill" style="background:#F1EFE8;color:#888780">No</span></td><td class="centered"><span class="pill" style="background:#E6F1FB;color:#0C447C">Acumulación</span></td><td class="centered"><span class="pill" style="background:#EEEDFE;color:#26215C">Canje</span></td><td class="centered"><span class="pill" style="background:#FCEBEB;color:#501313">Canje especial</span></td></tr>
+        <tr><td>Impuestos con puntos</td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check excl">★</span></td></tr>
+        <tr><td>Pago mixto pts + tarjeta</td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check no"><i class="ti ti-x" style="font-size:10px"></i></span></td><td class="centered"><span class="check excl">★</span></td></tr>
+        <tr><td>Descuento sobre</td><td class="centered" style="font-size:11px;color:#085041">Tarifa pública</td><td class="centered" style="font-size:11px;color:#0C447C">—</td><td class="centered" style="font-size:11px;color:#26215C">Base tarifaria</td><td class="centered" style="font-size:11px;color:#501313;font-weight:500">Total (incl. impuestos)</td></tr>
+        <tr><td>Notif. post-compra</td><td class="centered" style="font-size:11px;color:#085041">Email voucher</td><td class="centered" style="font-size:11px;color:#0C447C">Email + puntos</td><td class="centered" style="font-size:11px;color:#26215C">Email voucher</td><td class="centered" style="font-size:11px;color:#501313">Email + notif. bancaria</td></tr>
+        <tr><td>Partners Tier 1</td><td style="font-size:11px;color:#085041">Livelo, Liverpool,<br>Naranja, BCI, Scotia</td><td style="font-size:11px;color:#0C447C">LATAM BR/CL/PE/CO/AR,<br>Esfera</td><td style="font-size:11px;color:#26215C">LATAM canje, ICBC,<br>Sicredi, Coopera</td><td style="font-size:11px;color:#501313">BBVA AR/CO/UY/PE</td></tr>
+        <tr><td>URL base</td><td style="font-size:10px;font-family:monospace;color:#085041">dominio.partner.com</td><td style="font-size:10px;font-family:monospace;color:#0C447C">dominio.partner.com</td><td style="font-size:10px;font-family:monospace;color:#26215C">backoffice.../sessions/init<br>?partner_id=X&points=N</td><td style="font-size:10px;font-family:monospace;color:#501313">backoffice.../sessions/init<br>?partner_id=bbva-X</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:11px;color:var(--color-text-secondary);align-items:center">
+    <span style="font-weight:500;color:var(--color-text-primary)">Leyenda:</span>
+    <span style="display:flex;align-items:center;gap:4px"><span class="check yes" style="width:18px;height:18px"><i class="ti ti-check" style="font-size:9px"></i></span>Sí</span>
+    <span style="display:flex;align-items:center;gap:4px"><span class="check no" style="width:18px;height:18px"><i class="ti ti-x" style="font-size:9px"></i></span>No</span>
+    <span style="display:flex;align-items:center;gap:4px"><span class="check excl" style="width:18px;height:18px">★</span>Exclusivo BBVA</span>
+  </div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+function nav(id,btn){
+  document.querySelectorAll('.nav-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('nav-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
